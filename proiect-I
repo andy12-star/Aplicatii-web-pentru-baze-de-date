@@ -1,0 +1,20 @@
+ Platformă de evenimente și rezervări
+
+Cerințe de Business:
+- Utilizatorii pot crea cont, se pot autentifica și pot rezerva bilete pentru evenimente.
+- Organizatorii pot adăuga, edita și șterge evenimente.
+- Fiecare eveniment aparține unei categorii (ex: concert, teatru, conferință).
+- Evenimentele pot fi căutate după locație, dată, categorie și cuvinte cheie.
+- Utilizatorii pot adăuga recenzii și evaluări pentru evenimentele la care au participat.
+- Fiecare eveniment are o locație unică, cu adresă și capacitate.
+- Sistemul permite adăugarea mai multor bilete per rezervare.
+- Organizatorii pot vedea lista participanților și numărul de bilete vândute.
+- Sistemul trimite notificări (ex: bilete confirmate sau anulări).
+- Utilizatorii pot vizualiza istoricul rezervărilor proprii.
+
+MVP(minumum viable product):
+- Gestionarea utilizatorilor: înregistrare, autentificare, listare utilizatori, ștergere cont.
+- Gestionarea evenimentelor: creare, actualizare, ștergere, listare și filtrare după criterii (dată, categorie, locație).
+- Gestionarea rezervărilor: utilizatorii pot crea rezervări pentru evenimente și vizualiza rezervările anterioare.
+- Recenzii evenimente: utilizatorii pot lăsa comentarii și ratinguri la evenimente.
+- Gestionarea locațiilor și categoriilor: CRUD pentru locații și categorii de evenimente.

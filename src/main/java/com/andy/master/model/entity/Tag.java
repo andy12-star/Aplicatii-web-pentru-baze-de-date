@@ -1,10 +1,7 @@
 package com.andy.master.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -23,6 +20,9 @@ public class Tag {
     private String name;
 
     @ManyToMany(mappedBy = "tags")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Event> events;
-}
 
+
+}

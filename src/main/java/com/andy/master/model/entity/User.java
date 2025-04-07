@@ -4,10 +4,10 @@ import com.andy.master.model.enums.RoleType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 
 @Data
@@ -40,16 +40,17 @@ public class User {
     @NotNull(message = "Role is required")
     private RoleType role;
 
-
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Profile profile;
 
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Event> createdEvents;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Reservation> reservations;
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-//    private List<Notification> notifications;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Event> createdEvents;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Notification> notifications;
 }

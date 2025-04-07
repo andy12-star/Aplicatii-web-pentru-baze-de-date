@@ -25,7 +25,7 @@ public class Reservation {
     private Integer numberOfSeats;
 
     @Enumerated(EnumType.STRING)
-    private Status status; // PENDING, CONFIRMED, CANCELLED
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -21,7 +21,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/profile/**").permitAll()
-                        .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/api/events/**").permitAll()
+                        .requestMatchers("/api/reservations/**").permitAll()
+                        .requestMatchers("/api/categories/**").permitAll()
+                        .requestMatchers("/api/tags/**").permitAll()
+                        .requestMatchers("/api/notifications/**").permitAll()
                         .anyRequest().authenticated()
                 );
 

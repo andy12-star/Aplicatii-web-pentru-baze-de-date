@@ -25,7 +25,8 @@ public class Profile {
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private User user;
 
 }

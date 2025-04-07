@@ -22,9 +22,11 @@ public class Notification {
 
     private String message;
 
-    private Boolean read;
+    @Column(name = "is_read")
+    private boolean read;
 
-    private LocalDateTime timestamp;
+
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -1,10 +1,7 @@
 package com.andy.master.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -22,6 +19,13 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
+    private String title;
+
+    private String description;
+
+    private String location;
+
     private LocalDate date;
 
     private LocalTime time;
@@ -29,7 +33,7 @@ public class Event {
     private Integer availableSeats;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // organizatorul evenimentului
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
@@ -42,6 +46,8 @@ public class Event {
             joinColumns = @JoinColumn(name = "event_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Tag> tags;
 
 }

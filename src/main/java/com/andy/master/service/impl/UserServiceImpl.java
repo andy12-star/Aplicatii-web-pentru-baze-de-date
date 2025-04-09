@@ -1,6 +1,6 @@
 package com.andy.master.service.impl;
 
-import com.andy.master.model.dto.request.UserRequest;
+import com.andy.master.model.dto.request.RegisterRequest;
 import com.andy.master.model.dto.response.UserResponse;
 import com.andy.master.model.entity.Profile;
 import com.andy.master.model.entity.User;
@@ -9,7 +9,7 @@ import com.andy.master.repository.ProfileRepository;
 import com.andy.master.repository.UserRepository;
 import com.andy.master.service.api.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,40 +20,55 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public UserResponse createUser(UserRequest userRequest) {
-        if(userRepository.existsByEmail(userRequest.getEmail())) {
+    public UserResponse register(RegisterRequest request) {
+        if(userRepository.existsByEmail(request.getEmail())) {
             throw new RuntimeException("Email already exists");
         }
 
         User user = User.builder()
-                .firstName(userRequest.getFirstName())
-                .lastName(userRequest.getLastName())
-                .email(userRequest.getEmail())
-                .phoneNumber(userRequest.getPhoneNumber())
-                .password(bCryptPasswordEncoder.encode(userRequest.getPassword()))
-                .role(RoleType.CLIENT)
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
                 .build();
 
         User savedUser = userRepository.save(user);
 
         Profile profile = Profile.builder()
-                .fullName(user.getFirstName() + " " + user.getLastName())
+                .fullName(savedUser.getFirstName() + " " + savedUser.getLastName())
                 .user(savedUser)
                 .build();
 
         profileRepository.save(profile);
 
-        return UserResponse.builder()
-                .id(savedUser.getId())
-                .firstName(savedUser.getFirstName())
-                .lastName(savedUser.getLastName())
-                .email(savedUser.getEmail())
-                .phoneNumber(savedUser.getPhoneNumber())
-                .role(savedUser.getRole())
+        return mapToDto(savedUser);
+    }
+
+    @Override
+    public void createAdmin() {
+        if (userRepository.existsByEmail("andy@admin.com")) {
+            throw new RuntimeException("Admin already exists");
+        }
+
+        User admin = User.builder()
+                .firstName("Admin")
+                .lastName("Master")
+                .email("andy@admin.com")
+                .phoneNumber("0712345678")
+                .password(passwordEncoder.encode("admin123"))
+                .role(RoleType.ADMIN)
                 .build();
+        User savedUser = userRepository.save(admin);
+        Profile profile = Profile.builder()
+                .fullName("Admin Master")
+                .user(savedUser)
+                .build();
+        profileRepository.save(profile);
     }
 
     @Override
@@ -97,4 +112,5 @@ public class UserServiceImpl implements UserService {
                 .role(user.getRole())
                 .build();
     }
+
 }
